@@ -41,4 +41,11 @@ router.get('/logout', (req, res) => {
   res.render('logout')
 })
 
+router.get('/auth/twitter', (req, res) => {
+  res.render('twitter')
+})
+router.get('/auth/twitter/callback', (req, res) => {
+  res.render('twitterCallback')
+})
+
 module.exports = router

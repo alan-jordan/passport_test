@@ -64,3 +64,23 @@ test('Get /logout', t => {
       t.is($('h1').first().text(), 'Logout')
     })
 })
+
+test('Get /auth/twitter', t => {
+  return request(t.context.app)
+    .get('/auth/twitter')
+    .expect(200)
+    .then((res) => {
+      const $ = cheerio.load(res.text)
+      t.is($('h1').first().text(), 'Twitter')
+    })
+})
+
+test('Get /auth/twitter/logout', t => {
+  return request(t.context.app)
+    .get('/auth/twitter/callback')
+    .expect(200)
+    .then((res) => {
+      const $ = cheerio.load(res.text)
+      t.is($('h1').first().text(), 'Twitter Callback')
+    })
+})
