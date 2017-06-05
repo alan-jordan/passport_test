@@ -17,3 +17,41 @@ test('GET /', (t) => {
     })
 
 })
+
+test('GET /login', t => {
+  return request(t.context.app)
+    .get('/login')
+    .expect(200)
+    .then((res) => {
+      const $ = cheerio.load(res.text)
+      t.is($('h1').first().text(), 'Login')
+    })
+})
+
+test('Post /signup', t => {
+  const newUser = {
+    name: 'Dopey Derek',
+    email: 'derek@dopey.org',
+    twitter_id: 'derek',
+    password: 'test123'
+  }
+  return request(t.context.app)
+    .post('/signup')
+    .send(newUser)
+    .expect(201)
+})
+
+test('Post /login', t => {
+  const loginUser = {
+    email: 'baboon@example.org',
+    password: 'test123'
+  }
+  return request(t.context.app)
+    .post('/login')
+    .send(loginUser)
+    .expect(201)
+    .then((res) => {
+      t.pass()
+      t.end()
+    })
+})

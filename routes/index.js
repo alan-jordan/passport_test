@@ -13,4 +13,28 @@ router.get('/', function (req, res) {
     })
 })
 
+router.get('/login', (req, res) => {
+  res.render('login')
+})
+
+router.post('/signup', (req, res) => {
+  db.createUser(req.body, req.app.get('connection'))
+    .then(() => {
+      res.sendStatus(201)
+    })
+    .catch((err) => {
+      res.status(500).send('DATABASE ERROR: ' + err.message)
+    })
+})
+
+router.post('/login', (req, rest) => {
+  db.checkLogin(req.body, req.app.get('connection'))
+  .then(() => {
+    res.sendStatus(201)
+  })
+  .catch((err) => {
+    res.status(500).send('DATABASE ERROR: ' + err.message)
+  })
+})
+
 module.exports = router
