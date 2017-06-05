@@ -84,3 +84,23 @@ test('Get /auth/twitter/logout', t => {
       t.is($('h1').first().text(), 'Twitter Callback')
     })
 })
+
+test('Get /transactions', t => {
+  return request(t.context.app)
+    .get('/transactions')
+    .expect(200)
+    .then((res) => {
+      const $ = cheerio.load(res.text)
+      t.is($('h1').first().text(), 'Transactions')
+    })
+})
+
+test('Get /users/:id/profile/edit', t => {
+  return request(t.context.app)
+    .get('/users/99901/profile/edit')
+    .expect(200)
+    .then((res) => {
+      const $ = cheerio.load(res.text)
+      t.is($('h1').first().text(), 'Edit Profile')
+    })
+})

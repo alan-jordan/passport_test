@@ -122,3 +122,17 @@ test('checkLogin checks if user has provided correct details', t => {
       })
     })
 })
+
+test('checkLogin checks if user has provided incorrect details', t => {
+  const loginUser = {
+    email: 'baboon@example.org',
+    password: 'test12345677'
+  }
+  return db.checkLogin(loginUser, t.context.connection)
+    .then((login) => {
+      return new Promise((resolve, reject) => {
+        t.is(login, 'Passwords do not match')
+        resolve()
+      })
+    })
+})
