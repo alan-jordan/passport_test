@@ -49,9 +49,18 @@ test('Post /login', t => {
   return request(t.context.app)
     .post('/login')
     .send(loginUser)
-    .expect(201)
+    .expect(200)
     .then((res) => {
-      t.pass()
-      t.end()
+      t.is(res.text, 'User can log in')
+    })
+})
+
+test('Get /logout', t => {
+  return request(t.context.app)
+    .get('/logout')
+    .expect(200)
+    .then((res) => {
+      const $ = cheerio.load(res.text)
+      t.is($('h1').first().text(), 'Logout')
     })
 })

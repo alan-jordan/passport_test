@@ -27,14 +27,18 @@ router.post('/signup', (req, res) => {
     })
 })
 
-router.post('/login', (req, rest) => {
+router.post('/login', (req, res) => {
   db.checkLogin(req.body, req.app.get('connection'))
   .then(() => {
-    res.sendStatus(201)
+    res.send('User can log in').status(200)
   })
   .catch((err) => {
     res.status(500).send('DATABASE ERROR: ' + err.message)
   })
+})
+
+router.get('/logout', (req, res) => {
+  res.render('logout')
 })
 
 module.exports = router
